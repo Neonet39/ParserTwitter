@@ -11,18 +11,22 @@ public class LinkTwitter {
     private static int IndexTwitterList = -1;
     private static FileRead fileRead;
 
-    private static List<String>  getLinkTwitterList()  {
+    private  static List<String>  getLinkTwitterList()  {
         fileRead = new FileRead();
         fileRead.setPathc(FileConfig.getLink_panch());
         try {
-            return fileRead.readCurrenciesFile();
+
+            List<String> linkList =  fileRead.readCurrenciesFile();
+            fileRead.close();
+            return linkList;
+
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public static String getLink(){
+    public synchronized static String getLink(){
         if (LinkTwitterList == null){
             LinkTwitterList = getLinkTwitterList();
         }
